@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ventas y Gestión</title>
+    <!-- Iconos y Fuentes libres de derechos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ================= MÓDULO DE AUTENTICACIÓN ================= -->
+    <section id="auth-section">
+        <!-- Tarjeta de Registro -->
+        <div id="register-card" class="auth-card">
+            <div class="auth-header">
+                <i class="fa-solid fa-rocket auth-icon"></i>
+                <h2>Crear Cuenta</h2>
+                <p>Regístrate para acceder al panel de ventas</p>
+            </div>
+            <form id="form-register">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-nombre"><i class="fa-solid fa-user"></i> Nombre</label>
+                        <input type="text" id="reg-nombre" placeholder="Ej. María">
+                        <span class="error-msg" id="error-reg-nombre"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-apellido"><i class="fa-solid fa-user-tag"></i> Apellido</label>
+                        <input type="text" id="reg-apellido" placeholder="Ej. Alberto">
+                        <span class="error-msg" id="error-reg-apellido"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com">
+                    <span class="error-msg" id="error-reg-email"></span>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres">
+                    <span class="error-msg" id="error-reg-password"></span>
+                </div>
+                <button type="submit" class="btn btn-gradient-primary"><i class="fa-solid fa-user-plus"></i> Registrarse</button>
+            </form>
+            <div class="auth-switch">
+                ¿Ya tienes una cuenta? <a id="link-to-login">Inicia sesión</a>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Inicio de Sesión -->
+        <div id="login-card" class="auth-card hidden">
+            <div class="auth-header">
+                <i class="fa-solid fa-shield-halved auth-icon"></i>
+                <h2>Iniciar Sesión</h2>
+                <p>Ingresa tus credenciales para continuar</p>
+            </div>
+            <form id="form-login">
+                <div class="form-group">
+                    <label for="log-email"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="log-email" placeholder="correo@ejemplo.com">
+                    <span class="error-msg" id="error-log-email"></span>
+                </div>
+                <div class="form-group">
+                    <label for="log-password"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="log-password" placeholder="Tu contraseña">
+                    <span class="error-msg" id="error-log-password"></span>
+                </div>
+                <button type="submit" class="btn btn-gradient-primary"><i class="fa-solid fa-right-to-bracket"></i> Ingresar</button>
+            </form>
+            <div class="auth-switch">
+                ¿No tienes cuenta? <a id="link-to-register">Regístrate aquí</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SISTEMA PRINCIPAL ================= -->
+    <div id="app-section" class="hidden">
+        <!-- Encabezado (Header) -->
+        <header>
+            <div class="container header-content">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-bolt"></i></span>
+                    <span class="logo-text">Ventas<span class="highlight">Pro</span></span>
+                </div>
+                <div class="user-info">
+                    <div class="avatar-badge"><i class="fa-solid fa-circle-user"></i></div>
+                    <span id="user-display-name">Usuario</span>
+                    <button id="btn-logout" class="btn btn-danger-pill"><i class="fa-solid fa-power-off"></i> Salir</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Barra de Navegación -->
+        <nav>
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-btn active" data-target="sec-ventas"><i class="fa-solid fa-chart-pie"></i> Ventas y CRUD</a></li>
+                    <li><a href="#" class="nav-btn" data-target="sec-productos"><i class="fa-solid fa-store"></i> Catálogo Extendido</a></li>
+                    <li><a href="#" class="nav-btn" data-target="sec-negocio"><i class="fa-solid fa-circle-info"></i> Datos del Negocio</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Sección Principal -->
+        <main class="container">
+            <!-- 1. SECCIÓN DE VENTAS Y CRUD -->
+            <section id="sec-ventas" class="tab-content">
+                <div class="dashboard-grid">
+                    <!-- Formulario CRUD -->
+                    <div class="card card-accent-purple">
+                        <h3 id="form-title" class="card-title"><i class="fa-solid fa-cart-plus"></i> Registrar Venta</h3>
+                        <form id="form-venta" class="sales-form">
+                            <input type="hidden" id="venta-id">
+                            <div class="form-group">
+                                <label for="cliente"><i class="fa-solid fa-user-check"></i> Nombre del Cliente</label>
+                                <input type="text" id="cliente" placeholder="Nombre completo">
+                                <span class="error-msg" id="error-cliente"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto"><i class="fa-solid fa-box-open"></i> Producto / Servicio</label>
+                                <input type="text" id="producto" placeholder="Ej. Laptop Gaming Pro">
+                                <span class="error-msg" id="error-producto"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cantidad"><i class="fa-solid fa-hashtag"></i> Cantidad</label>
+                                    <input type="number" id="cantidad" min="1" placeholder="1">
+                                    <span class="error-msg" id="error-cantidad"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="precio"><i class="fa-solid fa-dollar-sign"></i> Precio ($)</label>
+                                    <input type="number" step="0.01" id="precio" placeholder="0.00">
+                                    <span class="error-msg" id="error-precio"></span>
+                                </div>
+                            </div>
+                            <button type="submit" id="btn-guardar" class="btn btn-gradient-success"><i class="fa-solid fa-floppy-disk"></i> Guardar Venta</button>
+                            <button type="button" id="btn-cancelar" class="btn btn-gradient-warning hidden" style="margin-top: 10px;"><i class="fa-solid fa-rotate-left"></i> Cancelar Edición</button>
+                        </form>
+                    </div>
+
+                    <!-- Tabla de Historial -->
+                    <div class="card card-accent-blue">
+                        <h3 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Transacciones</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Producto</th>
+                                        <th>Cant.</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-ventas-body">
+                                    <!-- Inyección de filas -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. SECCIÓN DE CATÁLOGO DE PRODUCTOS -->
+            <section id="sec-productos" class="tab-content hidden">
+                <div class="card card-accent-coral">
+                    <div class="catalog-header">
+                        <div>
+                            <h3 class="card-title"><i class="fa-solid fa-boxes-stacked"></i> Catálogo Completo de Productos</h3>
+                            <p class="subtitle">Haz clic en <strong>"Vender Este"</strong> para cargar los datos en el formulario automáticamente.</p>
+                        </div>
+                        <span class="product-count-badge" id="catalog-count">8 Productos</span>
+                    </div>
+                    <div class="products-grid" id="products-container">
+                        <!-- Carga dinámica -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SECCIÓN DE DATOS DEL NEGOCIO -->
+            <section id="sec-negocio" class="tab-content hidden">
+                <div class="dashboard-grid">
+                    <!-- Información General -->
+                    <div class="card card-accent-cyan">
+                        <h3 class="card-title"><i class="fa-solid fa-building-circle-check"></i> Información Comercial</h3>
+                        <div class="business-info">
+                            <div class="info-item">
+                                <div class="info-icon icon-purple"><i class="fa-solid fa-shop"></i></div>
+                                <div>
+                                    <small>Nombre Comercial</small>
+                                    <p>VentasPro Tech Solutions S.A.</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon icon-pink"><i class="fa-solid fa-location-dot"></i></div>
+                                <div>
+                                    <small>Ubicación</small>
+                                    <p>Av. Las Palmas #45, Distrito Innovación</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon icon-green"><i class="fa-solid fa-phone"></i></div>
+                                <div>
+                                    <small>Atención al Cliente</small>
+                                    <p>+503 2255-8800</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon icon-orange"><i class="fa-solid fa-envelope"></i></div>
+                                <div>
+                                    <small>Correo Electrónico</small>
+                                    <p>soporte@ventaspro.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resumen Estadístico -->
+                    <div class="card card-accent-emerald">
+                        <h3 class="card-title"><i class="fa-solid fa-chart-line"></i> Dashboard Operativo</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card stat-purple">
+                                <i class="fa-solid fa-receipt"></i>
+                                <h4 id="stat-total-ventas">0</h4>
+                                <span>Ventas Realizadas</span>
+                            </div>
+                            <div class="stat-card stat-green">
+                                <i class="fa-solid fa-wallet"></i>
+                                <h4 id="stat-monto-total">$0.00</h4>
+                                <span>Ingresos Totales</span>
+                            </div>
+                            <div class="stat-card stat-orange">
+                                <i class="fa-solid fa-boxes-packing"></i>
+                                <h4 id="stat-total-catalogo">8</h4>
+                                <span>En Catálogo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Pie de página (Footer) -->
+        <footer>
+            <div class="container">
+                <p>&copy; 2026 <strong>VentasPro Tech Solutions</strong>. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
